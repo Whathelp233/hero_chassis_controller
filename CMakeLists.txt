@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(ros_package_template)
+project(hero_chassis_controller)
 
 ## Use C++14
 set(CMAKE_CXX_STANDARD 14)
@@ -15,6 +15,19 @@ find_package(catkin REQUIRED
     roscpp
     sensor_msgs
     roslint
+    control_msgs
+    control_toolbox
+    controller_interface
+    hardware_interface
+    realtime_tools
+    std_msgs
+    pluginlib
+    forward_command_controller
+    geometry_msgs
+    tf
+    nav_msgs
+    tf2_geometry_msgs
+    tf2_ros
     )
 
 ## Find system libraries
@@ -40,6 +53,19 @@ catkin_package(
     CATKIN_DEPENDS
     roscpp
     sensor_msgs
+    roslint
+    control_msgs
+    control_toolbox
+    controller_interface
+    hardware_interface
+    realtime_tools
+    std_msgs
+    pluginlib
+    forward_command_controller
+    geometry_msgs
+    tf
+    nav_msgs
+    tf2_ros
     DEPENDS
     ## find_package(Eigen3) provides a non standard EIGEN3_INCLUDE_DIR instead of Eigen3_INCLUDE_DIRS.
     ## Therefore, the DEPEND does not work as expected and we need to add the directory to the INCLUDE_DIRS
@@ -55,87 +81,30 @@ catkin_package(
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
+
 include_directories(
     include
     ${catkin_INCLUDE_DIRS}
     # Set manually because Eigen sets a non standard INCLUDE DIR
-    ${EIGEN3_INCLUDE_DIR}
-    # Set because Boost is an internal dependency, not transitive.
-    ${Boost_INCLUDE_DIRS}
 )
 
-## Declare a cpp library
-add_library(${PROJECT_NAME}_core
-    src/Algorithm.cpp
-    )
-target_compile_features(${PROJECT_NAME}_core INTERFACE cxx_std_11)
-
 ## Declare cpp executables
-add_executable(${PROJECT_NAME}
-    src/${PROJECT_NAME}_node.cpp
-    src/RosPackageTemplate.cpp
-    )
-target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_11)
-
-## Add dependencies to exported targets, like ROS msgs or srvs
-add_dependencies(${PROJECT_NAME}_core
-    ${catkin_EXPORTED_TARGETS}
-    )
+add_library(${PROJECT_NAME}
+    src/hero_chassis_controller.cpp
+)
 
 add_dependencies(${PROJECT_NAME}
     ${catkin_EXPORTED_TARGETS}
     )
 
-## Specify libraries to link executable targets against
-target_link_libraries(${PROJECT_NAME}_core
-    ${catkin_LIBRARIES}
-    )
-
 target_link_libraries(${PROJECT_NAME}
-    ${PROJECT_NAME}_core
     ${catkin_LIBRARIES}
     )
-
-#############
-## Install ##
-#############
-
-# Mark executables and/or libraries for installation
-install(
-    TARGETS ${PROJECT_NAME} ${PROJECT_NAME}_core
-    ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-    LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-    RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+catkin_install_python(PROGRAMS
+   teleop_twist_keyboard.py
+   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
-# Mark cpp header files for installation
-install(
-    DIRECTORY include/${PROJECT_NAME}/
-    DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
-    FILES_MATCHING PATTERN "*.hpp"
-)
-
-# Mark other files for installation
-install(
-    DIRECTORY doc
-    DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
-)
-
-#############
-## Testing ##
-#############
-
-if (${CATKIN_ENABLE_TESTING})
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
-  ## Add gtest based cpp test target and link libraries
-  catkin_add_gtest(${PROJECT_NAME}-test
-      test/test_ros_package_template.cpp
-      test/AlgorithmTest.cpp)
-  target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME}_core)
-endif ()
-
-##########################
-## Static code analysis ##
 ##########################
 
 roslint_cpp()

@@ -1,0 +1,16 @@
+<launch>
+  <include file="$(find rm_description)/launch/hero.launch">
+    <arg name="load_chassis" value="true"/>
+    <arg name="roller_type" value="realistic"/>
+  </include>
+
+  <rosparam file="../config/default.yaml" command="load"/>
+  <!-- load the controllers -->
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+        output="screen" args="
+        controller/hero_chassis_controller
+        controller/joint_state_controller
+  "/>
+  <node name="teleop" pkg="hero_chassis_controller" type="teleop_twist_keyboard.py"/>
+
+</launch>
