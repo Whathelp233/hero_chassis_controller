@@ -1,8 +1,7 @@
 subscriber_topic: /temperature
-max_power: 100000000.0;
-acc_lim_x: 1.0;
-acc_lim_y: 1.0;
-acc_lim_theta: 1.0;
+max_power: 100000000.0
+walk_vel: 3.0
+yaw_rate: 3.0
 /controller: 
   hero_chassis_controller:
     pid_back_left: 
@@ -37,8 +36,8 @@ acc_lim_theta: 1.0;
     wheel_base: 0.4
     wheel_radius: 0.07625
     speed_mode: "global"
-    linear_scale: 1.0;
-    angular_scale: 1,0;
+    linear_scale: 1.0
+    angular_scale: 1,0
 controller:
   hero_chassis_controller:
     type: hero_chassis_controller/HeroChassisController
