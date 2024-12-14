@@ -84,10 +84,6 @@ void SmartCarKeyboardTeleopNode::keyboardLoop()
     RAW.c_cc[VEOL] = 1;
     RAW.c_cc[VEOF] = 2;
     tcsetattr(KFD, TCSANOW, &RAW);
-    
-    puts("Reading from keyboard");
-    puts("Use WASD keys to control the robot");
-    puts("Press Shift to move faster");
     struct pollfd ufd;
     ufd.fd = KFD;
     ufd.events = POLLIN;
