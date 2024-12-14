@@ -5,37 +5,37 @@ yaw_rate: 3.0
 /controller: 
   hero_chassis_controller:
     pid_back_left: 
-      p: 10.0
+      p: 20.0
       i: 0.0
-      d: 0.2
+      d: 0.6
       i_max: 0.0
       i_min: 0.0
       Target: 0.0
     pid_back_right: 
-      p: 10.0
+      p: 20.0
       i: 0.0
-      d: 0.2
+      d: 0.6
       i_max: 0.0
       i_min: 0.0
       Target: 0.0
     pid_front_left: 
-      p: 10.0
+      p: 20.0
       i: 0.0
-      d: 0.2
+      d: 0.6
       i_max: 0.0
       i_min: 0.0
       Target: 0.0
     pid_front_right: 
-      p: 10.0
+      p: 20.0
       i: 0.0
-      d: 0.2
+      d: 0.6
       i_max: 0.0
       i_min: 0.0
       Target: 0.0
     wheel_track: 0.4
     wheel_base: 0.4
     wheel_radius: 0.07625
-    speed_mode: "global"
+    speed_mode: "local"
     linear_scale: 1.0
     angular_scale: 1,0
 controller:
